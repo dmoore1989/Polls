@@ -32,4 +32,14 @@ class Question < ActiveRecord::Base
     answers.reduce(Hash.new(0)) { |accum, answer| accum[answer.answer_option] +=  answer.responses.length; accum }
   end
 
+  def eff_results
+    answers = self
+                .answer_options
+                .select("COUNT(responses.id) AS count,answer_options.*")
+                .joins("LEFT OUTER JOIN responses ON responses.answer_option_id = answer_options.id")
+                .group("answer_options.id")
+
+    answers.reduce({}) { |accum,answer| accum[answer.answer_option] = answer.count; accum }
+  end
+
 end

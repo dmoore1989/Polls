@@ -35,4 +35,11 @@ class Response < ActiveRecord::Base
       errors[:user] << "You have already answered this question"
     end
   end
+
+  def author_cannot_answer_own_question
+
+    if self.question.poll.author_id == self.user_id
+      errors[:user] << "You can't answer you're own poll!!"
+    end
+  end
 end
