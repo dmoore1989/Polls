@@ -2,6 +2,7 @@ class Response < ActiveRecord::Base
   validates :user_id, presence: true
   validates :answer_option_id, presence: true
   validate :respondent_has_not_already_answered_question
+  # validate :author_cannot_answer_own_question
 
   # Response#question
   has_one :question, :through => :answer_option, source: :question
@@ -19,11 +20,12 @@ class Response < ActiveRecord::Base
     primary_key: :id
   )
 
+
+  private
+
   def sibling_responses
     self.question.responses.where("? IS NULL OR responses.id != ?", self.id, self.id)
   end
-
-  private
 
   def respondent_has_not_already_answered_question
 
