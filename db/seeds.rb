@@ -12,6 +12,7 @@ User.destroy_all
 Poll.destroy_all
 Question.destroy_all
 AnswerOption.destroy_all
+Response.destroy_all
 
 #users
 new_users = []
@@ -34,4 +35,15 @@ new_options = []
   new_questions.each do |q_id|
     new_options << AnswerOption.create!(:question_id => q_id.id, :answer_option => "Yes of course #{q_id.id} AND #{a_num}" )
   end
+end
+
+#responses
+new_responses = []
+  # new_users[0].id will have 3 unique answers to 3 unique questions
+  # new_users[1..-1].id will have 1 unique answer to 1 unique question
+3.times do |i|
+  new_responses << Response.create!(:user_id => new_users[0].id, :answer_option_id => new_options[i + 5].id)
+end
+9.times do |i|
+  new_responses << Response.create!(:user_id => new_users[i+1].id, :answer_option_id => new_options[0].id)
 end

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many(
     :polls,
     class_name: "Poll",
-    foreign_key: :poll_id,
+    foreign_key: :author_id,
     primary_key: :id
   )
   has_many(
