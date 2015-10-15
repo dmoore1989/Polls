@@ -18,4 +18,18 @@ class Question < ActiveRecord::Base
     primary_key: :id
   )
 
+  def nplusone_results
+    options = self.answer_options
+
+    options.reduce(Hash.new(0)) do |accum, option|
+      accum[option.answer_option] += option.responses.count
+      accum
+    end
+  end
+
+  def results
+    answers = self.answer_options.includes(:responses)
+    answers.reduce(Hash.new(0)) { |accum, answer| accum[answer.answer_option] +=  answer.responses.length; accum }
+  end
+
 end
