@@ -1,0 +1,33 @@
+SELECT
+  answer_options.answer_option, COUNT(responses.id)
+FROM
+  answer_options
+LEFT OUTER JOIN
+  responses
+ON
+  responses.answer_option_id = answer_options.id
+WHERE
+  answer_options.question_id = 7
+GROUP BY
+  answer_options.answer_option;
+
+
+
+SELECT
+  polls.title, COUNT(responses.user_id)/CAST(COUNT(questions.id) AS FLOAT)
+FROM
+  questions
+JOIN
+  polls
+ON
+  polls.id = questions.poll_id
+JOIN
+  answer_options
+ON
+  questions.id = answer_options.question_id
+LEFT OUTER JOIN
+  responses
+ON
+  answer_options.id = response.answer_option_id
+GROUP BY
+  polls.title

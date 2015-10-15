@@ -29,6 +29,7 @@ new_questions = []
   new_questions << Question.create!(:poll_id => new_polls[i].id, :question => "#{i} primaries in a row will Hillary?")
 end
 
+
 #answer_options
 new_options = []
 5.times do |a_num|
@@ -47,3 +48,14 @@ end
 9.times do |i|
   new_responses << Response.create!(:user_id => new_users[i+1].id, :answer_option_id => new_options[0].id)
 end
+
+#more questions
+2.times do |i|
+  new_questions << Question.create!(:poll_id => new_polls[0].id, :question => "#{i} kids' tables DNC debate? Anderson Cooper?")
+  new_options << AnswerOption.create!(:question_id => new_questions.last.id, :answer_option => "The Second Amendment")
+  new_responses << Response.create!(:user_id => new_users[0].id, :answer_option_id => new_options.last.id)
+end
+new_responses << Response.create!(:user_id => new_users[1].id, :answer_option_id => new_options.last.id)
+
+
+new_questions << Question.create!(:poll_id => new_polls[1].id, :question => "Do have when as far as want to do you go more with you like?")
